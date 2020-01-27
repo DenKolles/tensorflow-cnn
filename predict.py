@@ -16,7 +16,7 @@ for dir in os.listdir('./data_test/'):
         image_size = 128
         num_channels = 3
         images = []
-        image = cv2.imread('./data_test(rotate)/%s/%s' % (dir, filename))
+        image = cv2.imread('./data_test/%s/%s' % (dir, filename))
         image = cv2.resize(image, (image_size, image_size),
                            0, 0, cv2.INTER_LINEAR)
         images.append(image)

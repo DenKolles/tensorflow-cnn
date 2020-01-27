@@ -221,4 +221,4 @@ def train(iteration_number):
     iterations_number_total += iteration_number
 
 
-train(iteration_number=30000)
+train(iteration_number=50)
