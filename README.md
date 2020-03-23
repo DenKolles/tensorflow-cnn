@@ -1,10 +1,10 @@
 # tensorflow-cnn
 >This fork is used for deploying the web application for CNN. If you want to use the original network, refer to original repo: https://github.com/igorves954/tensorflow-cnn
 
-##Requirements
+## Requirements
 - **Python 3.7**
 
-##Installing
+## Installing
 To launch the app locally, follow these steps:
 1) Clone the repository
 2) Install required plugins from 
