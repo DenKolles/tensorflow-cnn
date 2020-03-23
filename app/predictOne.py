@@ -1,20 +1,19 @@
 import tensorflow as tf
 import numpy as np
 import os
-import glob
 import cv2
-import sys
-import argparse
-from django.conf import settings
-from PIL import Image, ImageChops, ImageOps
+from PIL import Image
+from app import app
 
 classes = ['oncology', 'other']
 image_size = 128
 num_channels = 3
 
+
 def grey_scale(image):
     image = image.convert('1', dither=Image.NONE)
     return image
+
 
 def clean(input_path, output_path):
     image = Image.open(input_path)
@@ -29,12 +28,13 @@ def clean(input_path, output_path):
     image.putdata(newData)
     image.save(output_path)
 
+
 def crop(image):
     image = image.crop(image.getbbox())
     return image
 
 
-def predict(file_str):
+def predict_image(file_str):
     image_size = 128
     num_channels = 3
     images = []
@@ -49,8 +49,8 @@ def predict(file_str):
     x_batch = images.reshape(1, image_size, image_size, num_channels)
 
     sess = tf.Session()
-    saver = tf.train.import_meta_graph('model.meta')
-    saver.restore(sess, tf.train.latest_checkpoint('./'))
+    saver = tf.train.import_meta_graph('app/model.meta')
+    saver.restore(sess, tf.train.latest_checkpoint('./app/'))
 
     graph = tf.get_default_graph()
 
@@ -70,3 +70,10 @@ def predict(file_str):
         'class_name': classes[class_id],
         'probability': "{:.0f}%".format(max(result_list) * 100),
     }
+
+
+def save_prediction_image(form_image):
+    picture_path = os.path.join(app.root_path, 'static/prediction_images', form_image.filename)
+    i = Image.open(form_image)
+    i.save(picture_path)
+    return form_image.filename

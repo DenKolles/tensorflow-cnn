@@ -1,4 +1,4 @@
-import dataset
+from app import dataset
 import tensorflow as tf
 
 from numpy.random import seed
@@ -221,4 +221,4 @@ def train(iteration_number):
     iterations_number_total += iteration_number
 
 
-train(iteration_number=50)
+train(iteration_number=30000)

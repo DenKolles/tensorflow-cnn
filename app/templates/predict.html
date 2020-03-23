@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      <h2>
+        {{ form.image.label() }}
+      </h2>
+      <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="input-group mb-3">
+          <div class="custom-file form-control-lg">
+            {{ form.image(class="custom-file-input", id="inputGroupFile01") }}
+            {% if form.image.errors %}
+              {% for error in form.image.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
+            {% endif %}
+            <label class="custom-file-label" for="inputGroupFile01">{{ form.image.label() }}</label>
+          </div>
+          <div class="input-group-append">
+            {{ form.submit(class="btn btn-primary") }}
+          </div>
+        </div>
+      </form>
+    </div>
+{% endblock content %}

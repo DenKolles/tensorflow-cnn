@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="content-section">
+    <div class="article-metadata">
+        <small class="text-muted">{{ prediction.date_created.strftime('%B %d %Y, %H:%M:%S') }}</small>
+      {% if prediction.author == current_user %}
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+      {% endif %}
+    </div>
+    <div class="article-content">
+      <div class="row">
+        <div class="col-sm-4 text-center">
+          <a href="#" data-toggle="modal" data-target="#previewModal">
+            <img class="card-img-top img-responsive" style="max-width: 250px" src="{{ url_for('static', filename='prediction_images/' + prediction.image_file) }}" />
+          </a>
+        </div>
+        <div class="col-sm-8 text-center">
+          <div class="row">
+            <div class="col-sm-6">
+              <small class="text-muted">Class</small>
+              <h3>{{ prediction.class.name }}</h3>
+            </div>
+            <div class="col-sm-6">
+              <small class="text-muted">Prediction probability</small>
+              <h3>{{ prediction.probability }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <!-- delete prediction modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete prediction?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_prediction', prediction_id=prediction.id) }}" method="post">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- image preview modal -->
+  <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body mb-0 p-0">
+          <img style="width:100%" src="{{ url_for('static', filename='prediction_images/' + prediction.image_file) }}" />
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

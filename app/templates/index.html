@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content %}
+  {% if predictions %}
+    <nav class="navbar navbar-default p-0">
+      <p class="mb-0 text-muted">History of your predictions</p>
+      <button type="button" class="btn btn-danger btn-sm m-2" data-toggle="modal" data-target="#deleteAllModal">Delete all</button>
+    </nav>
+    <hr class="mt-0">
+      {% if predictions.items %}
+        {% for prediction in predictions.items %}
+          <a class="text-decoration-none" href="{{ url_for('get_prediction', prediction_id=prediction.id) }}">
+            <article class="content-section">
+              <div class="article-metadata">
+                <small class="text-muted">{{ prediction.date_created.strftime('%B %d %Y, %H:%M:%S') }}</small>
+              </div>
+              <h4 class="article-title">{{ prediction.class.name }}</h4>
+            </article>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p>You have no predictions now. Try adding a new one!</p>
+      {% endif %}
+    <div class="text-center">
+      {% for page_num in predictions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+          {% if predictions.page == page_num %}
+            <a class="btn btn-primary mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+          {% else %}
+            <a class="btn btn-outline-primary mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+          {% endif %}
+        {% else %}
+          ...
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <h1>Welcome!</h1>
+    <p>Here you can use a trained CNN for Pleural effusion cell images classification.</p>
+    <p>Try by uploading images of cells in question.</p>
+  {% endif %}
+  <!-- delete prediction modal -->
+  <div class="modal fade" id="deleteAllModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete all prediction and clear your history?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_predictions') }}" method="post">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

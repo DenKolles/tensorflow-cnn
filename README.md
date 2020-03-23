@@ -1,12 +1,15 @@
 # tensorflow-cnn
-Pleural effusion cell images classification: oncology and other. 
+>This fork is used for deploying the web application for CNN. If you want to use the original network, refer to original repo: https://github.com/igorves954/tensorflow-cnn
 
-Create folders 'data' (for training) and 'data_test' (for testing). Inside them create folders 'oncology' and 'other'. Put photos inside folders.
+##Requirements
+- **Python 3.7**
 
-To train cnn run file train.py:
-``python train.py``
-
-To test cnn run file predict.py:
-``python predict.py``
-
-Inside 'predictOne.py' file is a function of classificaion one image.
+##Installing
+To launch the app locally, follow these steps:
+1) Clone the repository
+2) Install required plugins from 
+``requirements.txt``
+3) Run file run.py
+``python run.py``
+4) Go to 
+``localhost:5000``
