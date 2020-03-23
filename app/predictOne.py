@@ -1,9 +1,7 @@
 import tensorflow as tf
 import numpy as np
-import os
 import cv2
 from PIL import Image
-from app import app
 
 classes = ['oncology', 'other']
 image_size = 128
@@ -70,10 +68,3 @@ def predict_image(file_str):
         'class_name': classes[class_id],
         'probability': "{:.0f}%".format(max(result_list) * 100),
     }
-
-
-def save_prediction_image(form_image):
-    picture_path = os.path.join(app.root_path, 'static/prediction_images', form_image.filename)
-    i = Image.open(form_image)
-    i.save(picture_path)
-    return form_image.filename

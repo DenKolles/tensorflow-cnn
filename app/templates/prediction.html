@@ -41,7 +41,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <form action="{{ url_for('delete_prediction', prediction_id=prediction.id) }}" method="post">
+          <form action="{{ url_for('predictions.delete_prediction', prediction_id=prediction.id) }}" method="post">
             <input class="btn btn-danger" type="submit" value="Delete">
           </form>
         </div>

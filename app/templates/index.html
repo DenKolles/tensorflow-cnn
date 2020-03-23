@@ -8,7 +8,7 @@
     <hr class="mt-0">
       {% if predictions.items %}
         {% for prediction in predictions.items %}
-          <a class="text-decoration-none" href="{{ url_for('get_prediction', prediction_id=prediction.id) }}">
+          <a class="text-decoration-none" href="{{ url_for('predictions.get_prediction', prediction_id=prediction.id) }}">
             <article class="content-section">
               <div class="article-metadata">
                 <small class="text-muted">{{ prediction.date_created.strftime('%B %d %Y, %H:%M:%S') }}</small>
@@ -24,9 +24,9 @@
       {% for page_num in predictions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
         {% if page_num %}
           {% if predictions.page == page_num %}
-            <a class="btn btn-primary mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+            <a class="btn btn-primary mb-4" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
           {% else %}
-            <a class="btn btn-outline-primary mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+            <a class="btn btn-outline-primary mb-4" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
           {% endif %}
         {% else %}
           ...
@@ -50,7 +50,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <form action="{{ url_for('delete_predictions') }}" method="post">
+          <form action="{{ url_for('predictions.delete_predictions') }}" method="post">
             <input class="btn btn-danger" type="submit" value="Delete">
           </form>
         </div>
