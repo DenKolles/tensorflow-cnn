@@ -8,7 +8,7 @@
 To launch the app locally, follow these steps:
 1) Clone the repository
 2) Install required plugins from 
-``requirements.txt``
+``pip install -r requirements.txt``
 3) Run file run.py
 ``python run.py``
 4) Go to 

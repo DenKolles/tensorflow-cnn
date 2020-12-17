@@ -1,35 +1,12 @@
 import tensorflow as tf
 import numpy as np
 import cv2
-from PIL import Image
+
+from app.imagePreprocess import preprocess
 
 classes = ['oncology', 'other']
 image_size = 128
 num_channels = 3
-
-
-def grey_scale(image):
-    image = image.convert('1', dither=Image.NONE)
-    return image
-
-
-def clean(input_path, output_path):
-    image = Image.open(input_path)
-    image = image.convert("RGBA")
-    data = image.getdata()
-    newData = []
-    for item in data:
-        if item[0] == 255 and item[1] == 255 and item[2] == 255:
-            newData.append((255, 255, 255, 0))
-        else:
-            newData.append(item)
-    image.putdata(newData)
-    image.save(output_path)
-
-
-def crop(image):
-    image = image.crop(image.getbbox())
-    return image
 
 
 def predict_image(file_str):
@@ -39,6 +16,7 @@ def predict_image(file_str):
     image = cv2.imread(file_str)
     image = cv2.resize(image, (image_size, image_size),
                        0, 0, cv2.INTER_LINEAR)
+    image = preprocess(image)
     images.append(image)
     images = np.array(images, dtype=np.uint8)
     images = images.astype('float32')

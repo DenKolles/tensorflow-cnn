@@ -3,6 +3,8 @@ import numpy as np
 import os
 import cv2
 
+from app.imagePreprocess import preprocess
+
 classes = ['oncology', 'other']
 
 for dir in os.listdir('./data_test/'):
@@ -16,6 +18,7 @@ for dir in os.listdir('./data_test/'):
         image = cv2.imread('./data_test/%s/%s' % (dir, filename))
         image = cv2.resize(image, (image_size, image_size),
                            0, 0, cv2.INTER_LINEAR)
+        image = preprocess(image)
         images.append(image)
         images = np.array(images, dtype=np.uint8)
         images = images.astype('float32')
